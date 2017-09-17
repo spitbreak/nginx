@@ -3,6 +3,11 @@
 ngx_int_t 
 ngx_xdemo_handler(ngx_http_request_t* rq)
 {
+    // TO get url arguments and output into log
+    ngx_str_t urlParams;
+    ngx_http_arg(rq, (u_char *)"user", 4, &urlParams);
+    ngx_log_error(NGX_LOG_ERR, rq->connection->log, 0, "url from request %s", urlParams.data);
+    
     ngx_int_t    rc;
     ngx_buf_t   *b;
     ngx_chain_t  out;
