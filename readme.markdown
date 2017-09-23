@@ -34,6 +34,6 @@ git push origin master
 
 Table of Contents
 ===================
-* [DESC](#description)
+* [DESC](#desc)
 * [Git Command](#git-command)
     * [Git sync from upstream branch](#git-sync-from-upstream-branch)
