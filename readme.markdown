@@ -23,9 +23,17 @@ git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.gi
 git fetch upstream
 ```
 * Merge to the current branch
+```
+git merge upstream/master
+```
+* Push the update
+```
+git push origin master
+```
+
 
 Table of Contents
 ===================
 * [DESC](#description)
-* [Git Command](#git command)
-    * [Git sync from upstream branch](#git sync from upstream branch)
+* [Git Command](#git-command)
+    * [Git sync from upstream branch](#git-sync-from-upstream-branch)
