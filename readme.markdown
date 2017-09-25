@@ -32,12 +32,53 @@ git push origin master
 ```
 
 
+Git create query delete push a branch
+-------------------
+* Query branch info
+```
+query all remote branches
+  # git branch -r
+
+query all local branch
+  # git branch
+```
+
+* Create a branch
+```
+create a branch
+  # git branch [name]
+
+switch branch
+  # git checkout [branch-name]
+
+merge a branch
+  # git merge [target-branch-name] (this means the target branch get merged with current branch)
+
+push a branch to remote repository
+  # git push origin [branch-name]
+  This full syntax should be git push origin [local-branch]:[remote-branch]
+```
+
+* Delete a branch
+```
+delete a branch(branch which get merged)
+  # git branch -d [branch-name]
+
+delete a branch(branch which do not get merged)
+  # get branch -d -D [branch-name]
+
+delete a branch from server
+  # git push origin :[branch-name]
+```
+Referance: [git book](https://git-scm.com/book/en/v2)
+
 Steps to configure nginx lua redis environment
 ===================
 * Download the source code of LuaJIT and lua-cjson
 ```
 git clone https://github.com/spitbreak/LuaJIT.git
 git clone https://github.com/spitbreak/lua-cjson.git
+git clone https://github.com/spitbreak/lua-redis-parser
 ```
 
 * Compile them
@@ -54,7 +95,7 @@ Compile nginx, install it and deploy self config file and lua script.
 
     Also you can use ngx_deploy.sh to deploy it automatically(ngx_depoly.sh has not download the source code yet and it'll add this function in the future).
 
-Reference: http://notes.11ten.net/fast-api-on-mac-use-nginx-lua-redis.html
+Reference: (http://notes.11ten.net/fast-api-on-mac-use-nginx-lua-redis.html)
 ```
 
 
@@ -63,4 +104,5 @@ Table of Contents
 * [DESC](#desc)
 * [Git Command](#git-command)
     * [Git sync from upstream branch](#git-sync-from-upstream-branch)
+    * [Git create query delete push a branch](#git-create-query-delete-push-a-branch)
 * [Steps to configure nginx lua redis environment](#steps-to-configure-nginx-lua-redis-environment)
