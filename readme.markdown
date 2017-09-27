@@ -3,7 +3,7 @@ Don't edit this file manually! Instead you should generate it by using:
     wiki2markdown.pl doc/HttpLuaModule.wiki
 -->
 
-DESC
+Description
 ===================
 This is the note of usually used commands here
 
@@ -72,6 +72,7 @@ delete a branch from server
 ```
 Referance: [git book](https://git-scm.com/book/en/v2)
 
+
 Steps to configure nginx lua redis environment
 ===================
 * Download the source code of LuaJIT and lua-cjson
@@ -95,14 +96,21 @@ Compile nginx, install it and deploy self config file and lua script.
 
     Also you can use ngx_deploy.sh to deploy it automatically(ngx_depoly.sh has not download the source code yet and it'll add this function in the future).
 
-Reference: (http://notes.11ten.net/fast-api-on-mac-use-nginx-lua-redis.html)
+Reference: [redis lua nginx configuration](http://notes.11ten.net/fast-api-on-mac-use-nginx-lua-redis.html)
 ```
+
+
+Redis Knowledge
+===================
+
 
 
 Table of Contents
 ===================
-* [DESC](#desc)
+* [Description](#description)
 * [Git Command](#git-command)
     * [Git sync from upstream branch](#git-sync-from-upstream-branch)
     * [Git create query delete push a branch](#git-create-query-delete-push-a-branch)
 * [Steps to configure nginx lua redis environment](#steps-to-configure-nginx-lua-redis-environment)
+* [Redis Knowledge](#redis-knowledge)
+
