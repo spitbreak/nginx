@@ -161,7 +161,9 @@ ngx_stream_add_variable(ngx_conf_t *cf, ngx_str_t *name, ngx_uint_t flags)
             return NULL;
         }
 
-        v->flags &= flags | ~NGX_STREAM_VAR_WEAK;
+        if (!(flags & NGX_STREAM_VAR_WEAK)) {
+            v->flags &= ~NGX_STREAM_VAR_WEAK;
+        }
 
         return v;
     }
@@ -227,7 +229,9 @@ ngx_stream_add_prefix_variable(ngx_conf_t *cf, ngx_str_t *name,
             return NULL;
         }
 
-        v->flags &= flags | ~NGX_STREAM_VAR_WEAK;
+        if (!(flags & NGX_STREAM_VAR_WEAK)) {
+            v->flags &= ~NGX_STREAM_VAR_WEAK;
+        }
 
         return v;
     }
@@ -477,6 +481,18 @@ ngx_stream_variable_binary_remote_addr(ngx_stream_session_t *s,
         v->no_cacheable = 0;
         v->not_found = 0;
         v->data = sin6->sin6_addr.s6_addr;
+
+        break;
+#endif
+
+#if (NGX_HAVE_UNIX_DOMAIN)
+    case AF_UNIX:
+
+        v->len = s->connection->addr_text.len;
+        v->valid = 1;
+        v->no_cacheable = 0;
+        v->not_found = 0;
+        v->data = s->connection->addr_text.data;
 
         break;
 #endif

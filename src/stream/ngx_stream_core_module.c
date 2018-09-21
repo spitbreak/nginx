@@ -249,32 +249,38 @@ ngx_stream_core_preread_phase(ngx_stream_session_t *s,
         }
 
         if (!c->read->ready) {
-            if (ngx_handle_read_event(c->read, 0) != NGX_OK) {
-                rc = NGX_ERROR;
-                break;
-            }
-
-            if (!c->read->timer_set) {
-                ngx_add_timer(c->read, cscf->preread_timeout);
-            }
-
-            c->read->handler = ngx_stream_session_handler;
-
-            return NGX_OK;
+            break;
         }
 
         n = c->recv(c, c->buffer->last, size);
 
-        if (n == NGX_ERROR) {
+        if (n == NGX_ERROR || n == 0) {
             rc = NGX_STREAM_OK;
             break;
         }
 
-        if (n > 0) {
-            c->buffer->last += n;
+        if (n == NGX_AGAIN) {
+            break;
         }
 
+        c->buffer->last += n;
+
         rc = ph->handler(s);
+    }
+
+    if (rc == NGX_AGAIN) {
+        if (ngx_handle_read_event(c->read, 0) != NGX_OK) {
+            ngx_stream_finalize_session(s, NGX_STREAM_INTERNAL_SERVER_ERROR);
+            return NGX_OK;
+        }
+
+        if (!c->read->timer_set) {
+            ngx_add_timer(c->read, cscf->preread_timeout);
+        }
+
+        c->read->handler = ngx_stream_session_handler;
+
+        return NGX_OK;
     }
 
     if (c->read->timer_set) {
@@ -734,7 +740,17 @@ ngx_stream_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 
         if (ngx_strcmp(value[i].data, "ssl") == 0) {
 #if (NGX_STREAM_SSL)
+            ngx_stream_ssl_conf_t  *sslcf;
+
+            sslcf = ngx_stream_conf_get_module_srv_conf(cf,
+                                                        ngx_stream_ssl_module);
+
+            sslcf->listen = 1;
+            sslcf->file = cf->conf_file->file.name.data;
+            sslcf->line = cf->conf_file->line;
+
             ls->ssl = 1;
+
             continue;
 #else
             ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
